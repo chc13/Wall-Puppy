@@ -15,7 +15,7 @@ public class CameraFollow : MonoBehaviour
     private Camera mainCam;
 
     private Vector3 smoothPos;
-    public float smoothSpeed = 0.25f;
+    public float smoothSpeed = 0.25f;//speed of how camera smoothly follows player
     public float followOffset = 5;//offset to not center the player
 
     // Start is called before the first frame update
