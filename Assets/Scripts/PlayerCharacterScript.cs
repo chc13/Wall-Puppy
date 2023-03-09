@@ -38,12 +38,19 @@ public class PlayerCharacterScript : MonoBehaviour
 
     private float yVelocityCap = 60;
 
+    //manager
+    public GameObject manager;
+    private Hitstop1 hitstop1;
+
     // Start is called before the first frame update
     void Start()
     {
         airJumpCount = airJumps;
         jumpingTimer = jumpingGrace;
         jumpParryTimer = jumpParryWindow;
+
+        manager = GameObject.FindGameObjectWithTag("Manager");
+        hitstop1 = manager.GetComponent<Hitstop1>();
     }
 
     // Update is called once per frame
@@ -130,6 +137,11 @@ public class PlayerCharacterScript : MonoBehaviour
                 //myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, velocity * 1.5f); //Vector2.up * velocity; //new Vector2(myRigidbody.velocity.x, 20); 
                 myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, myRigidbody.velocity.y + (velocity * 2));
                 Debug.Log("jump parried!");
+
+                //histop tests here
+                hitstop1.Freeze();
+
+                Debug.Log("finish hitstop");
                 //reset jump parry after a successful parry
                 jumpParryTimer = jumpParryWindow;
             }
@@ -236,7 +248,7 @@ public class PlayerCharacterScript : MonoBehaviour
             myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, yVelocityCap);
         }
 
-        //Debug.Log(myRigidbody.velocity);
+        //Debug.Log("velocity: " + myRigidbody.velocity);
     }
 
     private void OnTriggerStay2D(Collider2D collision)//maybe use this as a replacement for collisionstay, since we can have a trigger hitbox bigger than the collider, it may avoid the not touching wall because it bounced out issue
