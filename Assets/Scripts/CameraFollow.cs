@@ -38,7 +38,7 @@ public class CameraFollow : MonoBehaviour
 
     private void FixedUpdate()
     {
-        camY = Mathf.Clamp(followTransform.position.y + followOffset, yMin + camOrthsize, yMax - camOrthsize);
+        camY = Mathf.Clamp(followTransform.position.y + followOffset, yMin + camOrthsize, float.MaxValue);// yMax - camOrthsize);
         camX = Mathf.Clamp(followTransform.position.x, xMin + cameraRatio, xMax - cameraRatio);
 
         //smoothPos = Vector3.Lerp(this.transform.position, new Vector3(camX, camY, this.transform.position.z), smoothSpeed);
