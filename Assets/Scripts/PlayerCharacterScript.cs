@@ -36,6 +36,9 @@ public class PlayerCharacterScript : MonoBehaviour
     private float jumpParryWindow = 0.1f;
     private float jumpParryTimer = 0;
 
+    private bool superJumpParry = false;
+    private float superJumpParryWindow = 0.05f;
+
     private float yVelocityCap = 60;
 
     //manager
@@ -89,7 +92,16 @@ public class PlayerCharacterScript : MonoBehaviour
             //Debug.Log("not jumping");
         }
 
-        if(jumpParryTimer<jumpParryWindow)
+        if (jumpParryTimer < superJumpParryWindow)
+        {
+            superJumpParry = true;
+        }
+        else
+        {
+            superJumpParry = false;
+        }
+
+        if (jumpParryTimer<jumpParryWindow)
         {
             jumpParryTimer += Time.deltaTime;
             jumpParry = true;
@@ -98,6 +110,8 @@ public class PlayerCharacterScript : MonoBehaviour
         {
             jumpParry = false;
         }
+
+        
 
         /*
         if(upwardSlideTimer<upwardSlideGrace)
@@ -134,16 +148,29 @@ public class PlayerCharacterScript : MonoBehaviour
 
             if (touchingWall && jumpParry && movingUp && !onFloor)//jump parry upward wall slide
             {
-                //myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, velocity * 1.5f); //Vector2.up * velocity; //new Vector2(myRigidbody.velocity.x, 20); 
-                myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, myRigidbody.velocity.y + (velocity * 2));
-                Debug.Log("jump parried!");
+                if (superJumpParry)
+                {
+                    myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, myRigidbody.velocity.y + (velocity * 4));
+                    Debug.Log("SUPER jump parried!");
 
-                //histop tests here
-                hitstop1.Freeze();
 
-                Debug.Log("finish hitstop");
-                //reset jump parry after a successful parry
-                jumpParryTimer = jumpParryWindow;
+                    hitstop1.Freeze(0.2f);
+
+                    Debug.Log("finish hitstop");
+                }
+                else
+                {
+                    //myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, velocity * 1.5f); //Vector2.up * velocity; //new Vector2(myRigidbody.velocity.x, 20); 
+                    myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, myRigidbody.velocity.y + (velocity * 2));
+                    Debug.Log("jump parried!");
+
+                    //histop tests here
+                    hitstop1.Freeze();
+
+                    Debug.Log("finish hitstop");
+                    
+                }
+                jumpParryTimer = jumpParryWindow;//reset jump parry after a successful parry
             }
         }
 

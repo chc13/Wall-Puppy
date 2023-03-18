@@ -21,7 +21,7 @@ public class Hitstop1 : MonoBehaviour
     {
         if(pendingFreezeDuration>0 && !isFrozen)
         {
-            StartCoroutine(doFreeze());
+            StartCoroutine(doFreeze(pendingFreezeDuration));
         }
         
     }
@@ -31,13 +31,19 @@ public class Hitstop1 : MonoBehaviour
         pendingFreezeDuration = duration;
     }
 
-    IEnumerator doFreeze()
+    public void Freeze(float x)
+    {
+        pendingFreezeDuration = x;
+    }
+
+    IEnumerator doFreeze(float x)
     {
         isFrozen = true;
         var original = Time.timeScale;
         Time.timeScale = 0f;
 
-        yield return new WaitForSecondsRealtime(duration);
+        //yield return new WaitForSecondsRealtime(duration);
+        yield return new WaitForSecondsRealtime(x);
 
         Time.timeScale = original;
         pendingFreezeDuration = 0;
