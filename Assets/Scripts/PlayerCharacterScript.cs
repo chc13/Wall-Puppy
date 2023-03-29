@@ -283,6 +283,15 @@ public class PlayerCharacterScript : MonoBehaviour
         if (collision.gameObject.CompareTag("Wall"))
         {
             touchingWall = true;
+
+            if (transform.position.x < collision.gameObject.transform.position.x)
+            {
+                jumpRight = false;
+            }
+            else if (transform.position.x > collision.gameObject.transform.position.x)
+            {
+                jumpRight = true;
+            }
         }
 
         if (collision.gameObject.CompareTag("Floor"))
@@ -300,6 +309,7 @@ public class PlayerCharacterScript : MonoBehaviour
 
             enterWall = true;
 
+            /*
             if (transform.position.x < collision.gameObject.transform.position.x)
             {
                 jumpRight = false;
@@ -308,6 +318,7 @@ public class PlayerCharacterScript : MonoBehaviour
             {
                 jumpRight = true;
             }
+            */
 
             //TODO:CLING TO WALL
 

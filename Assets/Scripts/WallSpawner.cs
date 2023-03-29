@@ -5,6 +5,9 @@ using UnityEngine;
 public class WallSpawner : MonoBehaviour
 {
     public GameObject walls;
+
+    public GameObject[] wallLibrary;
+
     public int wallCount = 0;
 
     public GameObject player;
@@ -15,6 +18,8 @@ public class WallSpawner : MonoBehaviour
     void Start()
     {
         highestPlayerPos = 0;
+
+        Debug.Log("wall library size: " + wallLibrary.Length);
     }
 
     // Update is called once per frame
@@ -38,8 +43,12 @@ public class WallSpawner : MonoBehaviour
     {
         //Instantiate(pipe, new Vector3(transform.position.x,Random.Range(lowestPoint,highestPoint),0), transform.rotation);
 
+        GameObject temp;
+        temp = wallLibrary[Random.Range(0, wallLibrary.Length - 1)];
+
         float ypos = wallCount * 100;
-        Instantiate(walls, new Vector3(0, ypos, 0), transform.rotation);
+        //Instantiate(walls, new Vector3(0, ypos, 0), transform.rotation);
+        Instantiate(temp, new Vector3(0, ypos, 0), transform.rotation);
 
         wallCount++;
     }
