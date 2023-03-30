@@ -44,7 +44,7 @@ public class WallSpawner : MonoBehaviour
         //Instantiate(pipe, new Vector3(transform.position.x,Random.Range(lowestPoint,highestPoint),0), transform.rotation);
 
         GameObject temp;
-        temp = wallLibrary[Random.Range(0, wallLibrary.Length - 1)];
+        temp = wallLibrary[Random.Range(0, wallLibrary.Length)];
 
         float ypos = wallCount * 100;
         //Instantiate(walls, new Vector3(0, ypos, 0), transform.rotation);

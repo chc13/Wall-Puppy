@@ -685,8 +685,6 @@ MonoBehaviour:
   wallLibrary:
   - {fileID: 5597000815479695592, guid: d76a176bd1f24ce4d837652c71b35ed2, type: 3}
   - {fileID: 357419601792728357, guid: 3b6e6240d71a1904898843ae0d53bb01, type: 3}
-  - {fileID: 4751325100025615399, guid: 41b48205f680cd842a6ba0e299d5abac, type: 3}
-  - {fileID: 8162005226857432734, guid: 975725e59e848cf4180412d615e82fba, type: 3}
   wallCount: 0
   player: {fileID: 1419008420}
 --- !u!1 &1049812708
@@ -1776,7 +1774,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 357419601792728357, guid: 3b6e6240d71a1904898843ae0d53bb01, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 357419601792728358, guid: 3b6e6240d71a1904898843ae0d53bb01, type: 3}
       propertyPath: m_RootOrder
