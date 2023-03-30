@@ -39,7 +39,8 @@ public class PlayerCharacterScript : MonoBehaviour
     private bool superJumpParry = false;
     private float superJumpParryWindow = 0.05f;
 
-    private float yVelocityCap = 60;
+    public float yVelocityCap = 60;
+    public float currentVelocity;
 
     //manager
     public GameObject manager;
@@ -275,6 +276,7 @@ public class PlayerCharacterScript : MonoBehaviour
             myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, yVelocityCap);
         }
 
+        currentVelocity = myRigidbody.velocity.y;//for debugging purposes; will display on character script
         //Debug.Log("velocity: " + myRigidbody.velocity);
     }
 

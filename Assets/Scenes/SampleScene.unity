@@ -1081,6 +1081,8 @@ MonoBehaviour:
   defaultDrag: 0
   wallDrag: 5
   movingUp: 0
+  yVelocityCap: 60
+  currentVelocity: 0
   manager: {fileID: 0}
 --- !u!58 &1419008426
 CircleCollider2D:
