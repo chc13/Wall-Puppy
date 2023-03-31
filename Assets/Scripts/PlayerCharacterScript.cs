@@ -46,6 +46,9 @@ public class PlayerCharacterScript : MonoBehaviour
     public GameObject manager;
     private Hitstop1 hitstop1;
 
+    //smoke effect when jumping
+    public GameObject jumpSmoke;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -259,7 +262,9 @@ public class PlayerCharacterScript : MonoBehaviour
                     jumpParryTimer = 0;
                 }
 
-                
+                //Instantiate(jumpSmoke, gameObject.transform);
+                Instantiate(jumpSmoke, new Vector3(gameObject.transform.position.x,gameObject.transform.position.y,0),transform.rotation);
+                //Debug.Log("spawned smoke");
 
                 //jumpRight = !jumpRight;
             }
