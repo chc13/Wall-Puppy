@@ -9,7 +9,7 @@ public class PlayerCharacterScript : MonoBehaviour
     public float velocity = 10;
     public bool jumpRight = true;
     public bool canJump = true;
-    public int airJumps = 1;
+    public int airJumps = 2;
     private int airJumpCount;
     public bool touchingWall = false;
     public bool enterWall = false;

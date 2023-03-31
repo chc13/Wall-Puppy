@@ -20,7 +20,7 @@ public class WallSpawner : MonoBehaviour
         highestPlayerPos = 0;
 
         Debug.Log("wall library size: " + wallLibrary.Length);
-        spawnWalls();
+        spawnWalls(0);//spawn the very first wall in the library
         Debug.Log("spawn first wall");
     }
 
@@ -47,6 +47,18 @@ public class WallSpawner : MonoBehaviour
 
         GameObject temp;
         temp = wallLibrary[Random.Range(0, wallLibrary.Length)];
+
+        float ypos = wallCount * 100;
+        //Instantiate(walls, new Vector3(0, ypos, 0), transform.rotation);
+        Instantiate(temp, new Vector3(0, ypos, 0), transform.rotation);
+
+        wallCount++;
+    }
+
+    void spawnWalls(int x)
+    {
+        GameObject temp;
+        temp = wallLibrary[x];
 
         float ypos = wallCount * 100;
         //Instantiate(walls, new Vector3(0, ypos, 0), transform.rotation);
