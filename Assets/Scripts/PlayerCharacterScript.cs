@@ -283,6 +283,16 @@ public class PlayerCharacterScript : MonoBehaviour
 
         currentVelocity = myRigidbody.velocity.y;//for debugging purposes; will display on character script
         //Debug.Log("velocity: " + myRigidbody.velocity);
+
+        //determines where the character faces
+        if(jumpRight)
+        {
+            gameObject.transform.rotation = new Quaternion(gameObject.transform.rotation.x, -180, gameObject.transform.rotation.z, gameObject.transform.rotation.w);
+        }
+        else
+        {
+            gameObject.transform.rotation = new Quaternion(gameObject.transform.rotation.x, 0, gameObject.transform.rotation.z, gameObject.transform.rotation.w);
+        }
     }
 
     private void OnTriggerStay2D(Collider2D collision)//maybe use this as a replacement for collisionstay, since we can have a trigger hitbox bigger than the collider, it may avoid the not touching wall because it bounced out issue
