@@ -49,6 +49,9 @@ public class PlayerCharacterScript : MonoBehaviour
     //smoke effect when jumping
     public GameObject jumpSmoke;
 
+    //animations
+    public Animator animator;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -292,6 +295,25 @@ public class PlayerCharacterScript : MonoBehaviour
         else
         {
             gameObject.transform.rotation = new Quaternion(gameObject.transform.rotation.x, 0, gameObject.transform.rotation.z, gameObject.transform.rotation.w);
+        }
+
+        //air animations
+        if(!touchingWall && !onFloor)
+        {
+            animator.SetBool("jumping", true);
+        }
+        else
+        {
+            animator.SetBool("jumping", false);
+        }
+
+        if(touchingWall && !onFloor)
+        {
+            animator.SetBool("climbing", true);
+        }
+        else
+        {
+            animator.SetBool("climbing", false);
         }
     }
 
