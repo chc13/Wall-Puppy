@@ -270,6 +270,7 @@ public class PlayerCharacterScript : MonoBehaviour
                 //Debug.Log("spawned smoke");
 
                 //jumpRight = !jumpRight;
+                animator.SetTrigger("jumpTrigger");
             }
         }
 
@@ -316,13 +317,23 @@ public class PlayerCharacterScript : MonoBehaviour
             animator.SetBool("climbing", false);
         }
 
-        if(myRigidbody.velocity.y<0)
+        if(myRigidbody.velocity.y<0 && !onFloor)
         {
             animator.SetBool("falling", true);
         }
         else
         {
             animator.SetBool("falling", false);
+        }
+
+        if(onFloor)
+        {
+            //set animation onfloor to true
+            animator.SetBool("onFloor", true);
+        }
+        else
+        {
+            animator.SetBool("onFloor", false);
         }
     }
 

@@ -1452,7 +1452,7 @@ MonoBehaviour:
   enterWall: 0
   onFloor: 0
   defaultDrag: 0
-  wallDrag: 5
+  wallDrag: 2
   movingUp: 0
   yVelocityCap: 60
   currentVelocity: 0
