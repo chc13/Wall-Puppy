@@ -308,7 +308,7 @@ public class PlayerCharacterScript : MonoBehaviour
             animator.SetBool("jumping", false);
         }
 
-        if(touchingWall && !onFloor)
+        if(touchingWall && myRigidbody.velocity.y!=0)//!onFloor)
         {
             animator.SetBool("climbing", true);
         }
@@ -394,6 +394,9 @@ public class PlayerCharacterScript : MonoBehaviour
         {
             enterWall = false;
             airJumpCount = airJumps;
+
+            //todo:check if object is still touching wall so that if they exit a wall but is actually still touching another, it wont falsely say that theyre not touching a wall
+
             touchingWall = false;
         }
 
