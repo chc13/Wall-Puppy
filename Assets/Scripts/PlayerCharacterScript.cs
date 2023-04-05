@@ -315,6 +315,15 @@ public class PlayerCharacterScript : MonoBehaviour
         {
             animator.SetBool("climbing", false);
         }
+
+        if(myRigidbody.velocity.y<0)
+        {
+            animator.SetBool("falling", true);
+        }
+        else
+        {
+            animator.SetBool("falling", false);
+        }
     }
 
     private void OnTriggerStay2D(Collider2D collision)//maybe use this as a replacement for collisionstay, since we can have a trigger hitbox bigger than the collider, it may avoid the not touching wall because it bounced out issue
