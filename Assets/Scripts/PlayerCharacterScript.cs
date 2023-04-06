@@ -9,10 +9,21 @@ public class PlayerCharacterScript : MonoBehaviour
     public float velocity = 10;
     public bool jumpRight = true;
     public bool canJump = true;
-    public int airJumps = 2;
+    public int airJumps = 1;
     private int airJumpCount;
     public bool touchingWall = false;
-    public bool enterWall = false;
+
+    //public bool enterWall = false;
+    bool enterWall
+    {
+        get
+        {
+            return enterWallCount > 0;
+        }
+    }
+    private int enterWallCount = 0;
+
+
     public bool onFloor = false;
 
     public int defaultDrag = 0;
@@ -163,7 +174,7 @@ public class PlayerCharacterScript : MonoBehaviour
 
                     hitstop1.Freeze(0.2f);
 
-                    Debug.Log("finish hitstop");
+                    //Debug.Log("finish hitstop");
                 }
                 else
                 {
@@ -174,7 +185,7 @@ public class PlayerCharacterScript : MonoBehaviour
                     //histop tests here
                     hitstop1.Freeze();
 
-                    Debug.Log("finish hitstop");
+                    //Debug.Log("finish hitstop");
                     
                 }
                 jumpParryTimer = jumpParryWindow;//reset jump parry after a successful parry
@@ -308,7 +319,7 @@ public class PlayerCharacterScript : MonoBehaviour
             animator.SetBool("jumping", false);
         }
 
-        if(touchingWall && myRigidbody.velocity.y!=0)//!onFloor)
+        if((enterWall || touchingWall) && myRigidbody.velocity.y!=0)//!onFloor)
         {
             animator.SetBool("climbing", true);
         }
@@ -341,6 +352,7 @@ public class PlayerCharacterScript : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Wall"))
         {
+            //Debug.Log("enter wall");
             touchingWall = true;
 
             if (transform.position.x < collision.gameObject.transform.position.x)
@@ -366,7 +378,8 @@ public class PlayerCharacterScript : MonoBehaviour
         {
             //Debug.Log("hit a wall");
 
-            enterWall = true;
+            //enterWall = true;
+            enterWallCount++;
 
             /*
             if (transform.position.x < collision.gameObject.transform.position.x)
@@ -392,11 +405,12 @@ public class PlayerCharacterScript : MonoBehaviour
 
         if (collision.gameObject.CompareTag("Wall"))
         {
-            enterWall = false;
+            //enterWall = false;
+            enterWallCount--;
             airJumpCount = airJumps;
 
             //todo:check if object is still touching wall so that if they exit a wall but is actually still touching another, it wont falsely say that theyre not touching a wall
-
+            //Debug.Log("exit wall");
             touchingWall = false;
         }
 

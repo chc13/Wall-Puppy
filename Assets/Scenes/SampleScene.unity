@@ -1429,7 +1429,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!114 &1419008425
 MonoBehaviour:
@@ -1447,7 +1447,7 @@ MonoBehaviour:
   velocity: 10
   jumpRight: 1
   canJump: 1
-  airJumps: 2
+  airJumps: 1
   touchingWall: 0
   enterWall: 0
   onFloor: 0
