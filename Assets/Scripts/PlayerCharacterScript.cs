@@ -50,7 +50,8 @@ public class PlayerCharacterScript : MonoBehaviour
     private bool superJumpParry = false;
     private float superJumpParryWindow = 0.05f;
 
-    public float yVelocityCap = 60;
+    public float yVelocityCap = 60;//the velocity cap for when going up
+    public float yVelocityMin = -40; //the velocity cap for when falling
     public float currentVelocity;
 
     //manager
@@ -294,6 +295,11 @@ public class PlayerCharacterScript : MonoBehaviour
         if(myRigidbody.velocity.y>yVelocityCap)
         {
             myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, yVelocityCap);
+        }
+        //velocity min
+        if(myRigidbody.velocity.y<yVelocityMin)
+        {
+            myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, yVelocityMin);
         }
 
         currentVelocity = myRigidbody.velocity.y;//for debugging purposes; will display on character script
