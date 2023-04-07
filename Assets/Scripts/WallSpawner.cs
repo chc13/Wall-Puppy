@@ -19,9 +19,9 @@ public class WallSpawner : MonoBehaviour
     {
         highestPlayerPos = 0;
 
-        Debug.Log("wall library size: " + wallLibrary.Length);
+        //Debug.Log("wall library size: " + wallLibrary.Length);
         spawnWalls(0);//spawn the very first wall in the library
-        Debug.Log("spawn first wall");
+        //Debug.Log("spawn first wall");
     }
 
     // Update is called once per frame
