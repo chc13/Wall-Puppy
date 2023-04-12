@@ -64,6 +64,11 @@ public class PlayerCharacterScript : MonoBehaviour
     //animations
     public Animator animator;
 
+    //raycasts
+    //public ContactFilter2D contactFilter;
+    public LayerMask _layerMask;
+    public bool raySurfaceBelow = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -315,8 +320,26 @@ public class PlayerCharacterScript : MonoBehaviour
             gameObject.transform.rotation = new Quaternion(gameObject.transform.rotation.x, 0, gameObject.transform.rotation.z, gameObject.transform.rotation.w);
         }
 
+        //trying raycasts
+        float rayDistance = 0.6f;
+        Debug.DrawRay(transform.position, transform.TransformDirection(Vector2.down) * rayDistance, Color.red);
+
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.TransformDirection(Vector2.down), rayDistance, _layerMask);
+
+        if (hit)
+        {
+            raySurfaceBelow = true;
+            Debug.Log("hit something " + hit.collider.name);
+            //hit.transform.GetComponent
+        }
+        else
+        {
+            raySurfaceBelow = false;
+            Debug.Log("no raycast hit");
+        }
+
         //air animations
-        if(!touchingWall && !onFloor)
+        if (!(onFloor || raySurfaceBelow))
         {
             animator.SetBool("jumping", true);
         }
@@ -334,7 +357,7 @@ public class PlayerCharacterScript : MonoBehaviour
             animator.SetBool("climbing", false);
         }
 
-        if(myRigidbody.velocity.y<0 && !onFloor)
+        if(myRigidbody.velocity.y<0 && !(onFloor || raySurfaceBelow))
         {
             animator.SetBool("falling", true);
         }
@@ -343,7 +366,7 @@ public class PlayerCharacterScript : MonoBehaviour
             animator.SetBool("falling", false);
         }
 
-        if(onFloor)
+        if(onFloor || raySurfaceBelow)
         {
             //set animation onfloor to true
             animator.SetBool("onFloor", true);
@@ -352,6 +375,8 @@ public class PlayerCharacterScript : MonoBehaviour
         {
             animator.SetBool("onFloor", false);
         }
+
+        
     }
 
     private void OnTriggerStay2D(Collider2D collision)//maybe use this as a replacement for collisionstay, since we can have a trigger hitbox bigger than the collider, it may avoid the not touching wall because it bounced out issue
@@ -369,6 +394,26 @@ public class PlayerCharacterScript : MonoBehaviour
             {
                 jumpRight = true;
             }
+
+            //TODO:check to see if player is on top of a wall? should probably do a more specific check, like take the object size into consideration to actual make sure where we are in relation to it
+            //collision.gameObject.GetComponent<>
+            //if (transform.position.y < collision.gameObject.transform.position.y - collision.gameObject.transform.height)
+            /*if(collision.gameObject.GetComponent<Collision2D>().contacts[0].normal == Vector2.up)
+            {
+                
+                Debug.Log("on top of object");
+            }*/
+            /*
+            RaycastHit2D[] hits = new RaycastHit2D[0];
+            if(collision.Raycast(Vector2.up, hits)>0)
+            {
+                Debug.Log("raycasting");
+                if (hits[0].collider.gameObject.CompareTag("Player"))
+                {
+                    Debug.Log("player on top");
+                }
+            }*/
+            //NOTE: try raycasts
         }
 
         if (collision.gameObject.CompareTag("Floor"))
