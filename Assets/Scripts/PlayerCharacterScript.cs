@@ -386,7 +386,11 @@ public class PlayerCharacterScript : MonoBehaviour
             //Debug.Log("enter wall");
             touchingWall = true;
 
-            if (transform.position.x < collision.gameObject.transform.position.x)
+            if (onFloor || raySurfaceBelow)
+            {
+                //the player is on top of a surface, do nothing
+            }
+            else if (transform.position.x < collision.gameObject.transform.position.x)
             {
                 jumpRight = false;
             }
@@ -394,6 +398,7 @@ public class PlayerCharacterScript : MonoBehaviour
             {
                 jumpRight = true;
             }
+
 
             //TODO:check to see if player is on top of a wall? should probably do a more specific check, like take the object size into consideration to actual make sure where we are in relation to it
             //collision.gameObject.GetComponent<>
