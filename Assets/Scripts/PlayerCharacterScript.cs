@@ -68,6 +68,7 @@ public class PlayerCharacterScript : MonoBehaviour
     //public ContactFilter2D contactFilter;
     public LayerMask _layerMask;
     public bool raySurfaceBelow = false;
+    public bool raySurfaceAbove = false;
 
     bool onSurface = false;
 
@@ -350,16 +351,16 @@ public class PlayerCharacterScript : MonoBehaviour
 
         if (hitUp)
         {
-            //raySurfaceBelow = true;
+            raySurfaceAbove = true;
             Debug.Log("hit something up " + hitUp.collider.name);
-            //hit.transform.GetComponent
         }
         else
         {
-            //raySurfaceBelow = false;
-            //Debug.Log("no raycast hit");
+            raySurfaceAbove = false;
         }
 
+
+        //combine both onFloor and raySurfaceBelow to a new onSurface bool
         if(onFloor || raySurfaceBelow)
         {
             onSurface = true;
