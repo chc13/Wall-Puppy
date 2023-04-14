@@ -69,6 +69,8 @@ public class PlayerCharacterScript : MonoBehaviour
     public LayerMask _layerMask;
     public bool raySurfaceBelow = false;
 
+    bool onSurface = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -324,22 +326,51 @@ public class PlayerCharacterScript : MonoBehaviour
         float rayDistance = 0.6f;
         Debug.DrawRay(transform.position, transform.TransformDirection(Vector2.down) * rayDistance, Color.red);
 
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.TransformDirection(Vector2.down), rayDistance, _layerMask);
+        RaycastHit2D hitDown = Physics2D.Raycast(transform.position, transform.TransformDirection(Vector2.down), rayDistance, _layerMask);//raycast used to check for surfaces below character
 
-        if (hit)
+        Debug.DrawRay(transform.position, transform.TransformDirection(Vector2.up) * rayDistance, Color.blue);
+
+
+
+        if (hitDown)
         {
             raySurfaceBelow = true;
-            Debug.Log("hit something " + hit.collider.name);
+            Debug.Log("hit something down " + hitDown.collider.name);
             //hit.transform.GetComponent
         }
         else
         {
             raySurfaceBelow = false;
-            Debug.Log("no raycast hit");
+            //Debug.Log("no raycast hit");
+        }
+
+        Debug.DrawRay(transform.position, transform.TransformDirection(Vector2.up) * rayDistance, Color.blue);
+
+        RaycastHit2D hitUp = Physics2D.Raycast(transform.position, transform.TransformDirection(Vector2.up), rayDistance, _layerMask);//raycast used to check for surfaces above character
+
+        if (hitUp)
+        {
+            //raySurfaceBelow = true;
+            Debug.Log("hit something up " + hitUp.collider.name);
+            //hit.transform.GetComponent
+        }
+        else
+        {
+            //raySurfaceBelow = false;
+            //Debug.Log("no raycast hit");
+        }
+
+        if(onFloor || raySurfaceBelow)
+        {
+            onSurface = true;
+        }
+        else
+        {
+            onSurface = false;
         }
 
         //air animations
-        if (!(onFloor || raySurfaceBelow))
+        if (!onSurface)
         {
             animator.SetBool("jumping", true);
         }
@@ -357,7 +388,7 @@ public class PlayerCharacterScript : MonoBehaviour
             animator.SetBool("climbing", false);
         }
 
-        if(myRigidbody.velocity.y<0 && !(onFloor || raySurfaceBelow))
+        if(myRigidbody.velocity.y<0 && !onSurface)
         {
             animator.SetBool("falling", true);
         }
@@ -366,7 +397,7 @@ public class PlayerCharacterScript : MonoBehaviour
             animator.SetBool("falling", false);
         }
 
-        if(onFloor || raySurfaceBelow)
+        if(onSurface)
         {
             //set animation onfloor to true
             animator.SetBool("onFloor", true);
@@ -386,7 +417,7 @@ public class PlayerCharacterScript : MonoBehaviour
             //Debug.Log("enter wall");
             touchingWall = true;
 
-            if (onFloor || raySurfaceBelow)
+            if (onSurface)
             {
                 //the player is on top of a surface, do nothing
             }
