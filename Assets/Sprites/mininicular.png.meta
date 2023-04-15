@@ -47,7 +47,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 16
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -1430,7 +1430,6 @@ TextureImporter:
     secondaryTextures: []
     nameFileIdTable:
       mininicular_30: -1665999490
-      mininicular_52: -96039610
       mininicular_19: -506077447
       mininicular_54: 1511899928
       mininicular_29: 912717907
@@ -1483,9 +1482,10 @@ TextureImporter:
       mininicular_12: 781908519
       mininicular_20: 282499323
       mininicular_46: -1974505914
+      mininicular_52: -96039610
       mininicular_18: 1635110071
-      mininicular_23: 1969704016
       mininicular_25: -585436309
+      mininicular_23: 1969704016
       mininicular_8: -882413011
       mininicular_5: -795981949
       mininicular_28: 1270847697
