@@ -159,7 +159,13 @@ public class PlayerCharacterScript : MonoBehaviour
 
             myRigidbody.drag = wallDrag;
 
-            myRigidbody.velocity = new Vector2(0, myRigidbody.velocity.y);//make it so that the character doesnt move away from the wall, let's them "stick" to it
+            if (raySurfaceAbove)
+            {//if they are bumping on a ceiling, dont halt horizontal movement
+            }
+            else
+            {
+                myRigidbody.velocity = new Vector2(0, myRigidbody.velocity.y);//make it so that the character doesnt move away from the wall, let's them "stick" to it
+            }
         }
         else
         {
@@ -331,8 +337,6 @@ public class PlayerCharacterScript : MonoBehaviour
 
         Debug.DrawRay(transform.position, transform.TransformDirection(Vector2.up) * rayDistance, Color.blue);
 
-
-
         if (hitDown)
         {
             raySurfaceBelow = true;
@@ -380,7 +384,7 @@ public class PlayerCharacterScript : MonoBehaviour
             animator.SetBool("jumping", false);
         }
 
-        if((enterWall || touchingWall) && myRigidbody.velocity.y!=0)//!onFloor)
+        if((enterWall || touchingWall) && myRigidbody.velocity.y!=0 && !raySurfaceAbove)//!onFloor)
         {
             animator.SetBool("climbing", true);
         }
@@ -418,9 +422,9 @@ public class PlayerCharacterScript : MonoBehaviour
             //Debug.Log("enter wall");
             touchingWall = true;
 
-            if (onSurface)
+            if (onSurface || raySurfaceAbove)
             {
-                //the player is on top of a surface, do nothing
+                //the player is on top of a surface or if they hit a ceiling, do nothing
             }
             else if (transform.position.x < collision.gameObject.transform.position.x)
             {
@@ -495,9 +499,16 @@ public class PlayerCharacterScript : MonoBehaviour
         {
             //enterWall = false;
             enterWallCount--;
-            airJumpCount = airJumps;
 
-            //todo:check if object is still touching wall so that if they exit a wall but is actually still touching another, it wont falsely say that theyre not touching a wall
+            if (raySurfaceAbove)
+            {
+                //dont reset airjumps if player bumps a ceiling
+            }
+            else
+            {
+                airJumpCount = airJumps;
+            }
+
             //Debug.Log("exit wall");
             touchingWall = false;
         }
