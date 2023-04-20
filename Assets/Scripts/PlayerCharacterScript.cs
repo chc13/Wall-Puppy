@@ -69,6 +69,8 @@ public class PlayerCharacterScript : MonoBehaviour
     public LayerMask _layerMask;
     public bool raySurfaceBelow = false;
     public bool raySurfaceAbove = false;
+    public bool raySurfaceLeft = false;
+    public bool raySurfaceRight = false;
 
     bool onSurface = false;
 
@@ -323,10 +325,14 @@ public class PlayerCharacterScript : MonoBehaviour
         if(jumpRight)
         {
             gameObject.transform.rotation = new Quaternion(gameObject.transform.rotation.x, -180, gameObject.transform.rotation.z, gameObject.transform.rotation.w);
+            //gameObject.GetComponentInChildren<SpriteRenderer>().flipX = true;
+            //temp.flipX = true;
         }
         else
         {
             gameObject.transform.rotation = new Quaternion(gameObject.transform.rotation.x, 0, gameObject.transform.rotation.z, gameObject.transform.rotation.w);
+            //gameObject.GetComponentInChildren<SpriteRenderer>().flipX = false;
+            //temp.flipX = false;
         }
 
         //trying raycasts
@@ -356,16 +362,43 @@ public class PlayerCharacterScript : MonoBehaviour
         if (hitUp)
         {
             raySurfaceAbove = true;
-            Debug.Log("hit something up " + hitUp.collider.name);
+            //Debug.Log("hit something up " + hitUp.collider.name);
         }
         else
         {
             raySurfaceAbove = false;
         }
 
+        Debug.DrawRay(transform.position, Vector2.left * rayDistance, Color.green);
+
+        RaycastHit2D hitLeft = Physics2D.Raycast(transform.position, Vector2.left, rayDistance, _layerMask);//raycast used to check for surfaces above character
+
+        if (hitLeft)
+        {
+            raySurfaceLeft = true;
+            //Debug.Log("hit something left " + hitLeft.collider.name);
+        }
+        else
+        {
+            raySurfaceLeft= false;
+        }
+
+        Debug.DrawRay(transform.position, Vector2.right * rayDistance, Color.yellow);
+
+        RaycastHit2D hitRight = Physics2D.Raycast(transform.position, Vector2.right, rayDistance, _layerMask);//raycast used to check for surfaces above character
+
+        if (hitRight)
+        {
+            raySurfaceRight = true;
+            //Debug.Log("hit something right " + hitRight.collider.name);
+        }
+        else
+        {
+            raySurfaceRight = false;
+        }
 
         //combine both onFloor and raySurfaceBelow to a new onSurface bool
-        if(onFloor || raySurfaceBelow)
+        if (onFloor || raySurfaceBelow)
         {
             onSurface = true;
         }
@@ -419,20 +452,24 @@ public class PlayerCharacterScript : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Wall"))
         {
+
             //Debug.Log("enter wall");
             touchingWall = true;
 
             if (onSurface || raySurfaceAbove)
             {
                 //the player is on top of a surface or if they hit a ceiling, do nothing
+                //Debug.Log("player on surface or hit a ceiling");
             }
-            else if (transform.position.x < collision.gameObject.transform.position.x)
+            else if (raySurfaceRight) //(transform.position.x < collision.gameObject.transform.position.x)
             {
                 jumpRight = false;
+                //Debug.Log("surface to the right, jumpRight = false");
             }
-            else if (transform.position.x > collision.gameObject.transform.position.x)
+            else if (raySurfaceLeft) //(transform.position.x > collision.gameObject.transform.position.x)
             {
                 jumpRight = true;
+                //Debug.Log("surface to the left, jumpRight = true");
             }
 
 
