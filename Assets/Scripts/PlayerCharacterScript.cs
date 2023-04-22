@@ -10,18 +10,18 @@ public class PlayerCharacterScript : MonoBehaviour
     public bool jumpRight = true;
     public bool canJump = true;
     public int airJumps = 1;
-    private int airJumpCount;
+    public int airJumpCount;
     public bool touchingWall = false;
 
     //public bool enterWall = false;
-    bool enterWall
+    public bool enterWall
     {
         get
         {
             return enterWallCount > 0;
         }
     }
-    private int enterWallCount = 0;
+    public int enterWallCount = 0;
 
 
     public bool onFloor = false;
@@ -88,6 +88,23 @@ public class PlayerCharacterScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //touchingWall = enterWall;
+        //Debug.Log("enter wall: " + enterWall + ", touching wall: " + touchingWall);
+
+        //determines where the character faces
+        if (jumpRight)
+        {
+            gameObject.transform.rotation = new Quaternion(gameObject.transform.rotation.x, -180, gameObject.transform.rotation.z, gameObject.transform.rotation.w);
+            //gameObject.GetComponentInChildren<SpriteRenderer>().flipX = true;
+            //temp.flipX = true;
+        }
+        else
+        {
+            gameObject.transform.rotation = new Quaternion(gameObject.transform.rotation.x, 0, gameObject.transform.rotation.z, gameObject.transform.rotation.w);
+            //gameObject.GetComponentInChildren<SpriteRenderer>().flipX = false;
+            //temp.flipX = false;
+        }
+
         //can only jump if they are either touching a wall, floor, or if they have air jumps
         if (touchingWall || onFloor || airJumpCount > 0)
         {
@@ -163,10 +180,12 @@ public class PlayerCharacterScript : MonoBehaviour
 
             if (raySurfaceAbove)
             {//if they are bumping on a ceiling, dont halt horizontal movement
+
             }
             else
             {
                 myRigidbody.velocity = new Vector2(0, myRigidbody.velocity.y);//make it so that the character doesnt move away from the wall, let's them "stick" to it
+                //Debug.Log("freezing horizontal movement");
             }
         }
         else
@@ -186,7 +205,7 @@ public class PlayerCharacterScript : MonoBehaviour
                 if (superJumpParry)
                 {
                     myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, myRigidbody.velocity.y + (velocity * 4));
-                    Debug.Log("SUPER jump parried!");
+                    //Debug.Log("SUPER jump parried!");
 
 
                     hitstop1.Freeze(0.2f);
@@ -197,7 +216,7 @@ public class PlayerCharacterScript : MonoBehaviour
                 {
                     //myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, velocity * 1.5f); //Vector2.up * velocity; //new Vector2(myRigidbody.velocity.x, 20); 
                     myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, myRigidbody.velocity.y + (velocity * 2));
-                    Debug.Log("jump parried!");
+                    //Debug.Log("jump parried!");
 
                     //histop tests here
                     hitstop1.Freeze();
@@ -319,21 +338,8 @@ public class PlayerCharacterScript : MonoBehaviour
         }
 
         currentVelocity = myRigidbody.velocity.y;//for debugging purposes; will display on character script
-        //Debug.Log("velocity: " + myRigidbody.velocity);
 
-        //determines where the character faces
-        if(jumpRight)
-        {
-            gameObject.transform.rotation = new Quaternion(gameObject.transform.rotation.x, -180, gameObject.transform.rotation.z, gameObject.transform.rotation.w);
-            //gameObject.GetComponentInChildren<SpriteRenderer>().flipX = true;
-            //temp.flipX = true;
-        }
-        else
-        {
-            gameObject.transform.rotation = new Quaternion(gameObject.transform.rotation.x, 0, gameObject.transform.rotation.z, gameObject.transform.rotation.w);
-            //gameObject.GetComponentInChildren<SpriteRenderer>().flipX = false;
-            //temp.flipX = false;
-        }
+
 
         //trying raycasts
         float rayDistance = 0.6f;
@@ -346,7 +352,7 @@ public class PlayerCharacterScript : MonoBehaviour
         if (hitDown)
         {
             raySurfaceBelow = true;
-            Debug.Log("hit something down " + hitDown.collider.name);
+            //Debug.Log("hit something down " + hitDown.collider.name);
             //hit.transform.GetComponent
         }
         else
@@ -456,6 +462,7 @@ public class PlayerCharacterScript : MonoBehaviour
             //Debug.Log("enter wall");
             touchingWall = true;
 
+            
             if (onSurface || raySurfaceAbove)
             {
                 //the player is on top of a surface or if they hit a ceiling, do nothing
@@ -471,7 +478,22 @@ public class PlayerCharacterScript : MonoBehaviour
                 jumpRight = true;
                 //Debug.Log("surface to the left, jumpRight = true");
             }
+            
 
+            /*
+            if (onSurface || raySurfaceAbove)
+            {
+                //the player is on top of a surface or if they hit a ceiling, do nothing
+                //Debug.Log("player on surface or hit a ceiling");
+            }
+            else if (transform.position.x < collision.gameObject.transform.position.x)
+            {
+                jumpRight = false;
+            }
+            else if (transform.position.x > collision.gameObject.transform.position.x)
+            {
+                jumpRight = true;
+            }*/
 
             //TODO:check to see if player is on top of a wall? should probably do a more specific check, like take the object size into consideration to actual make sure where we are in relation to it
             //collision.gameObject.GetComponent<>
