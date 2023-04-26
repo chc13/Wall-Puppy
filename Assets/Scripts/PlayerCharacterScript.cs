@@ -52,7 +52,7 @@ public class PlayerCharacterScript : MonoBehaviour
 
     public float yVelocityCap = 60;//the velocity cap for when going up
     public float yVelocityMin = -40; //the velocity cap for when falling
-    public float currentVelocity;
+    public Vector2 currentVelocity;
 
     //manager
     public GameObject manager;
@@ -205,7 +205,7 @@ public class PlayerCharacterScript : MonoBehaviour
                 if (superJumpParry)
                 {
                     myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, myRigidbody.velocity.y + (velocity * 4));
-                    //Debug.Log("SUPER jump parried!");
+                    Debug.Log("SUPER jump parried!");
 
 
                     hitstop1.Freeze(0.2f);
@@ -216,7 +216,7 @@ public class PlayerCharacterScript : MonoBehaviour
                 {
                     //myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, velocity * 1.5f); //Vector2.up * velocity; //new Vector2(myRigidbody.velocity.x, 20); 
                     myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, myRigidbody.velocity.y + (velocity * 2));
-                    //Debug.Log("jump parried!");
+                    Debug.Log("jump parried!");
 
                     //histop tests here
                     hitstop1.Freeze();
@@ -337,7 +337,7 @@ public class PlayerCharacterScript : MonoBehaviour
             myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, yVelocityMin);
         }
 
-        currentVelocity = myRigidbody.velocity.y;//for debugging purposes; will display on character script
+        currentVelocity = myRigidbody.velocity;//for debugging purposes; will display on character script
 
 
 
