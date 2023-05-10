@@ -50,7 +50,7 @@ public class PlayerCharacterScript : MonoBehaviour
     private bool superJumpParry = false;
     private float superJumpParryWindow = 0.05f;
 
-    public float yVelocityCap = 60;//the velocity cap for when going up
+    public float yVelocityCap = 40;//the velocity cap for when going up
     public float yVelocityMin = -40; //the velocity cap for when falling
     public Vector2 currentVelocity;
 
