@@ -228,9 +228,17 @@ public class PlayerCharacterScript : MonoBehaviour
             }
         }
 
-        //Debug.Log(myRigidbody.velocity);
+        //can use this to switch jump directions
+        if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            jumpRight = true;
+        }
+        else if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            jumpRight = false;
+        }
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("Submit"))
         {
             if (canJump)
             {
@@ -243,7 +251,7 @@ public class PlayerCharacterScript : MonoBehaviour
                 {
                     if (movingUp)
                     {
-                        //Debug.Log("momentum added!");
+                        //add momentum
                         if (jumpRight)
                         {
                             myRigidbody.velocity = new Vector2(1 * velocity, myRigidbody.velocity.y + (velocity * .5f));
