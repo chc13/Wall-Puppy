@@ -228,17 +228,21 @@ public class PlayerCharacterScript : MonoBehaviour
             }
         }
 
+        bool playerInput = false;
+
         //can use this to switch jump directions
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
             jumpRight = true;
+            playerInput = true;
         }
         else if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
             jumpRight = false;
+            playerInput = true;
         }
 
-        if (Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("Submit"))
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("Submit") || playerInput)
         {
             if (canJump)
             {
