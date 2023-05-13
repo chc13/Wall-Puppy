@@ -74,6 +74,9 @@ public class PlayerCharacterScript : MonoBehaviour
 
     bool onSurface = false;
 
+    //UI stuff
+    public GameUI gameUI;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -83,6 +86,8 @@ public class PlayerCharacterScript : MonoBehaviour
 
         manager = GameObject.FindGameObjectWithTag("Manager");
         hitstop1 = manager.GetComponent<Hitstop1>();
+
+        gameUI = GameObject.FindGameObjectWithTag("Manager").GetComponent<GameUI>();
     }
 
     // Update is called once per frame
@@ -350,7 +355,7 @@ public class PlayerCharacterScript : MonoBehaviour
         }
 
         currentVelocity = myRigidbody.velocity;//for debugging purposes; will display on character script
-
+        gameUI.updateSpeed(myRigidbody.velocity.y);
 
 
         //trying raycasts
