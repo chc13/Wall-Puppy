@@ -209,7 +209,7 @@ public class PlayerCharacterScript : MonoBehaviour
             {
                 if (superJumpParry)
                 {
-                    myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, myRigidbody.velocity.y + (velocity * 4));
+                    myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, myRigidbody.velocity.y + (velocity * 2));
                     Debug.Log("SUPER jump parried!");
 
 
@@ -220,7 +220,7 @@ public class PlayerCharacterScript : MonoBehaviour
                 else
                 {
                     //myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, velocity * 1.5f); //Vector2.up * velocity; //new Vector2(myRigidbody.velocity.x, 20); 
-                    myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, myRigidbody.velocity.y + (velocity * 2));
+                    myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, myRigidbody.velocity.y + (velocity * 1));
                     Debug.Log("jump parried!");
 
                     //histop tests here
