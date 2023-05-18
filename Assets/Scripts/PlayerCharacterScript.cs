@@ -53,6 +53,8 @@ public class PlayerCharacterScript : MonoBehaviour
     private float lateParryTimer = 0;
     private bool lateParry = false;
     private bool superLateParry = false;
+    private float lateParryWindow = 0.05f;
+    private float superLateParryWindow = 0.25f;
 
     public float yVelocityCap = 40;//the velocity cap for when going up
     public float yVelocityMin = -40; //the velocity cap for when falling
@@ -166,10 +168,10 @@ public class PlayerCharacterScript : MonoBehaviour
             jumpParry = false;
         }
 
-        //TODO: jump parries for late parries, when the player parries after touching a wall
+        //jump parries for late parries, when the player parries after touching a wall
         if(touchingWall)
         {
-            if(lateParryTimer < superJumpParryWindow)
+            if(lateParryTimer < superLateParryWindow)
             {
                 superLateParry = true;
             }
@@ -178,7 +180,7 @@ public class PlayerCharacterScript : MonoBehaviour
                 superLateParry = false;
             }
 
-            if (lateParryTimer < jumpParryWindow)
+            if (lateParryTimer < lateParryWindow)
             {
                 lateParryTimer += Time.deltaTime;//only count up if touching wall
                 lateParry = true;
