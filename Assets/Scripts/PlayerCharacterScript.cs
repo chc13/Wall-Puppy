@@ -50,6 +50,10 @@ public class PlayerCharacterScript : MonoBehaviour
     private bool superJumpParry = false;
     private float superJumpParryWindow = 0.05f;
 
+    private float lateParryTimer = 0;
+    private bool lateParry = false;
+    private bool superLateParry = false;
+
     public float yVelocityCap = 40;//the velocity cap for when going up
     public float yVelocityMin = -40; //the velocity cap for when falling
     public Vector2 currentVelocity;
@@ -162,7 +166,34 @@ public class PlayerCharacterScript : MonoBehaviour
             jumpParry = false;
         }
 
-        
+        //TODO: jump parries for late parries, when the player parries after touching a wall
+        if(touchingWall)
+        {
+            if(lateParryTimer < superJumpParryWindow)
+            {
+                superLateParry = true;
+            }
+            else
+            {
+                superLateParry = false;
+            }
+
+            if (lateParryTimer < jumpParryWindow)
+            {
+                lateParryTimer += Time.deltaTime;//only count up if touching wall
+                lateParry = true;
+            }
+            else
+            {
+                lateParry = false;
+            }
+        }
+        else
+        {
+            //reset late parry timer if not touching a wall
+            lateParryTimer = 0;
+        }
+
 
         /*
         if(upwardSlideTimer<upwardSlideGrace)
@@ -205,9 +236,9 @@ public class PlayerCharacterScript : MonoBehaviour
                 //myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, myRigidbody.velocity.y + velocity);
             }*/
 
-            if (touchingWall && jumpParry && movingUp && !onFloor)//jump parry upward wall slide
+            if (touchingWall && (jumpParry /*|| lateParry*/) && movingUp && !onFloor)//jump parry upward wall slide
             {
-                if (superJumpParry)
+                if (superJumpParry /*|| superLateParry*/)
                 {
                     myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, myRigidbody.velocity.y + (velocity * 2));
                     Debug.Log("SUPER jump parried!");
@@ -230,6 +261,7 @@ public class PlayerCharacterScript : MonoBehaviour
                     
                 }
                 jumpParryTimer = jumpParryWindow;//reset jump parry after a successful parry
+                lateParryTimer = jumpParryWindow;//reset late jump parry to make sure that you cant late jump parry after a successful parry
             }
         }
 
@@ -258,7 +290,29 @@ public class PlayerCharacterScript : MonoBehaviour
 
                 if(touchingWall)//for wall jumps
                 {
-                    if (movingUp)
+
+                    //late jump parry
+                    if(lateParry)
+                    {
+                        if(superLateParry)
+                        {
+                            myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, myRigidbody.velocity.y + (velocity * 2));
+                            Debug.Log("SUPER late jump parried!");
+
+
+                            hitstop1.Freeze(0.2f);
+                        }
+                        else
+                        {
+                            myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, myRigidbody.velocity.y + (velocity * 1));
+                            Debug.Log("late jump parried!");
+
+                            hitstop1.Freeze();
+                        }
+                        lateParryTimer = jumpParryWindow;//reset timer to window so that you cant parry again
+                        jumpParryTimer = jumpParryWindow;//reset jump parry
+                    }
+                    else if (movingUp)//else if not a late parry, it's a normal wall jump
                     {
                         //add momentum
                         if (jumpRight)
