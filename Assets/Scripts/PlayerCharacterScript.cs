@@ -99,6 +99,9 @@ public class PlayerCharacterScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        
+
         //touchingWall = enterWall;
         //Debug.Log("enter wall: " + enterWall + ", touching wall: " + touchingWall);
 
@@ -268,6 +271,43 @@ public class PlayerCharacterScript : MonoBehaviour
         }
 
         bool playerInput = false;
+
+        //touch input code here
+        if (Input.touchCount > 0 && Input.touches[0].phase == TouchPhase.Began)
+        {
+            if (Input.touches[0].rawPosition.x <= Screen.width / 2f)
+            {
+                jumpRight = false;
+                playerInput = true;
+                Debug.Log("touched left side of screen");
+            }
+            else if (Input.touches[0].rawPosition.x > Screen.width / 2f)
+            {
+                jumpRight = true;
+                playerInput = true;
+                Debug.Log("touched right side of screen");
+            }
+        }
+
+#if UNITY_EDITOR
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            if (Input.mousePosition.x <= Screen.width / 2f)
+            {
+                jumpRight = false;
+                playerInput = true;
+                Debug.Log("touched left side of screen");
+            }
+            else if (Input.mousePosition.x > Screen.width / 2f)
+            {
+                jumpRight = true;
+                playerInput = true;
+                Debug.Log("touched right side of screen");
+            }
+        }
+
+#endif
 
         //can use this to switch jump directions
         if (Input.GetKeyDown(KeyCode.RightArrow))
