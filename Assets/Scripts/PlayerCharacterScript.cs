@@ -275,6 +275,7 @@ public class PlayerCharacterScript : MonoBehaviour
         //touch input code here
         if (Input.touchCount > 0 && Input.touches[0].phase == TouchPhase.Began)
         {
+            
             if (Input.touches[0].rawPosition.x <= Screen.width / 2f)
             {
                 jumpRight = false;
@@ -287,6 +288,10 @@ public class PlayerCharacterScript : MonoBehaviour
                 playerInput = true;
                 Debug.Log("touched right side of screen");
             }
+            
+
+            //code for no directional jumps
+            //playerInput = true;
         }
 
 #if UNITY_EDITOR
