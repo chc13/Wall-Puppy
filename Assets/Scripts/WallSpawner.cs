@@ -14,6 +14,8 @@ public class WallSpawner : MonoBehaviour
     float playerPos;
     float highestPlayerPos;
 
+    private int lastSpawned =-1;//use to indicate which wall was spawned last
+
     // Start is called before the first frame update
     void Start()
     {
@@ -46,11 +48,21 @@ public class WallSpawner : MonoBehaviour
         //Instantiate(pipe, new Vector3(transform.position.x,Random.Range(lowestPoint,highestPoint),0), transform.rotation);
 
         GameObject temp;
-        temp = wallLibrary[Random.Range(0, wallLibrary.Length)];
+
+        int roll = Random.Range(0, wallLibrary.Length);
+
+        if(roll==lastSpawned)//if the first roll is the same as the last wall spawned, reroll
+        {
+            roll = Random.Range(0, wallLibrary.Length);
+        }
+
+        temp = wallLibrary[roll];
 
         float ypos = wallCount * 100;
         //Instantiate(walls, new Vector3(0, ypos, 0), transform.rotation);
         Instantiate(temp, new Vector3(0, ypos, 0), transform.rotation);
+
+        lastSpawned = roll;
 
         wallCount++;
     }
@@ -63,6 +75,8 @@ public class WallSpawner : MonoBehaviour
         float ypos = wallCount * 100;
         //Instantiate(walls, new Vector3(0, ypos, 0), transform.rotation);
         Instantiate(temp, new Vector3(0, ypos, 0), transform.rotation);
+
+        lastSpawned = x;
 
         wallCount++;
     }
