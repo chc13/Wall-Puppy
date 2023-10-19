@@ -8,6 +8,10 @@ public class WallSpawner : MonoBehaviour
 
     public GameObject[] wallLibrary;
 
+    //wall libraries for individual left and right pieces
+    public GameObject[] wallLibraryLeft;
+    public GameObject[] wallLibraryRight;
+
     public int wallCount = 0;
 
     public GameObject player;
@@ -39,7 +43,8 @@ public class WallSpawner : MonoBehaviour
         if(highestPlayerPos>((wallCount+1)*100)-100)//(wallCount+1)*100)
         {
             Debug.Log("spawn wall");
-            spawnWalls();
+            //spawnWalls();
+            spawnWallsAsym();
         }
     }
 
@@ -77,6 +82,25 @@ public class WallSpawner : MonoBehaviour
         Instantiate(temp, new Vector3(0, ypos, 0), transform.rotation);
 
         lastSpawned = x;
+
+        wallCount++;
+    }
+
+    void spawnWallsAsym()//spawn asymmetrical walls
+    {
+        GameObject leftTemp;
+        GameObject rightTemp;
+
+        int rollLeft = Random.Range(0, wallLibraryLeft.Length);
+        int rollRight = Random.Range(0, wallLibraryRight.Length);
+
+        leftTemp = wallLibraryLeft[rollLeft];
+        rightTemp = wallLibraryRight[rollRight];
+
+        float ypos = wallCount * 100;
+
+        Instantiate(leftTemp, new Vector3(0, ypos, 0), transform.rotation);
+        Instantiate(rightTemp, new Vector3(0, ypos, 0), transform.rotation);
 
         wallCount++;
     }
