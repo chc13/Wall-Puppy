@@ -42,7 +42,7 @@ public class WallSpawner : MonoBehaviour
 
         if(highestPlayerPos>((wallCount+1)*100)-100)//(wallCount+1)*100)
         {
-            Debug.Log("spawn wall");
+            Debug.Log("spawn wall " + wallCount);
             //spawnWalls();
             spawnWallsAsym();
         }
